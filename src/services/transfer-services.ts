@@ -23,7 +23,7 @@ export class TransferService {
     toAccountId,
     amount,
   }: TransferInput): Promise<Transfer> {
-    if (amount <= 0 || Number.isInteger(amount)) {
+    if (amount <= 0) {
       throw new InvalidAmountError();
     }
     if (fromAccountId === toAccountId) {
