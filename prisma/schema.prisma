@@ -1,0 +1,31 @@
+generator client {
+    provider = "prisma-client"
+    output = "../src/generated/prisma"
+}
+
+datasource db {
+    provider = "postgresql"
+}
+
+model Account {
+    id String @id @default(cuid())
+    owner String
+    balance Int // in cents
+    createdAt DateTime @default(now())
+
+    sent Transfer[] @relation("SentTransfers")
+    received Transfer[] @relation("ReceivedTransfers")
+}
+
+model Transfer {
+    id String @id @default(cuid())
+    amount Int // in cents, > 0
+    fromAccountId String
+    toAccountId String
+    createdAt DateTime @default(now())
+    fromAccount Account @relation("SentTransfers", fields: [fromAccountId], references: [id])
+    toAccount Account @relation("ReceivedTransfers", fields: [toAccountId], references: [id])
+    @@index([fromAccountId])
+    @@index([toAccountId])
+}
+
