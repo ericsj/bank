@@ -27,3 +27,8 @@ export type Account = Prisma.AccountModel
  * 
  */
 export type Transfer = Prisma.TransferModel
+/**
+ * Model User
+ * 
+ */
+export type User = Prisma.UserModel

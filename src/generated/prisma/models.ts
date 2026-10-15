@@ -10,4 +10,5 @@
  */
 export type * from './models/Account'
 export type * from './models/Transfer'
+export type * from './models/User'
 export type * from './commonInputTypes'

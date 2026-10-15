@@ -210,6 +210,7 @@ export type AccountWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Account"> | Date | string
   sent?: Prisma.TransferListRelationFilter
   received?: Prisma.TransferListRelationFilter
+  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type AccountOrderByWithRelationInput = {
@@ -219,6 +220,7 @@ export type AccountOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   sent?: Prisma.TransferOrderByRelationAggregateInput
   received?: Prisma.TransferOrderByRelationAggregateInput
+  user?: Prisma.UserOrderByWithRelationInput
 }
 
 export type AccountWhereUniqueInput = Prisma.AtLeast<{
@@ -231,6 +233,7 @@ export type AccountWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Account"> | Date | string
   sent?: Prisma.TransferListRelationFilter
   received?: Prisma.TransferListRelationFilter
+  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
 export type AccountOrderByWithAggregationInput = {
@@ -262,6 +265,7 @@ export type AccountCreateInput = {
   createdAt?: Date | string
   sent?: Prisma.TransferCreateNestedManyWithoutFromAccountInput
   received?: Prisma.TransferCreateNestedManyWithoutToAccountInput
+  user?: Prisma.UserCreateNestedOneWithoutAccountInput
 }
 
 export type AccountUncheckedCreateInput = {
@@ -271,6 +275,7 @@ export type AccountUncheckedCreateInput = {
   createdAt?: Date | string
   sent?: Prisma.TransferUncheckedCreateNestedManyWithoutFromAccountInput
   received?: Prisma.TransferUncheckedCreateNestedManyWithoutToAccountInput
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutAccountInput
 }
 
 export type AccountUpdateInput = {
@@ -280,6 +285,7 @@ export type AccountUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sent?: Prisma.TransferUpdateManyWithoutFromAccountNestedInput
   received?: Prisma.TransferUpdateManyWithoutToAccountNestedInput
+  user?: Prisma.UserUpdateOneWithoutAccountNestedInput
 }
 
 export type AccountUncheckedUpdateInput = {
@@ -289,6 +295,7 @@ export type AccountUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sent?: Prisma.TransferUncheckedUpdateManyWithoutFromAccountNestedInput
   received?: Prisma.TransferUncheckedUpdateManyWithoutToAccountNestedInput
+  user?: Prisma.UserUncheckedUpdateOneWithoutAccountNestedInput
 }
 
 export type AccountCreateManyInput = {
@@ -390,12 +397,27 @@ export type AccountUpdateOneRequiredWithoutReceivedNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AccountUpdateToOneWithWhereWithoutReceivedInput, Prisma.AccountUpdateWithoutReceivedInput>, Prisma.AccountUncheckedUpdateWithoutReceivedInput>
 }
 
+export type AccountCreateNestedOneWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutUserInput, Prisma.AccountUncheckedCreateWithoutUserInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutUserInput
+  connect?: Prisma.AccountWhereUniqueInput
+}
+
+export type AccountUpdateOneRequiredWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutUserInput, Prisma.AccountUncheckedCreateWithoutUserInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutUserInput
+  upsert?: Prisma.AccountUpsertWithoutUserInput
+  connect?: Prisma.AccountWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AccountUpdateToOneWithWhereWithoutUserInput, Prisma.AccountUpdateWithoutUserInput>, Prisma.AccountUncheckedUpdateWithoutUserInput>
+}
+
 export type AccountCreateWithoutSentInput = {
   id?: string
   owner: string
   balance: number
   createdAt?: Date | string
   received?: Prisma.TransferCreateNestedManyWithoutToAccountInput
+  user?: Prisma.UserCreateNestedOneWithoutAccountInput
 }
 
 export type AccountUncheckedCreateWithoutSentInput = {
@@ -404,6 +426,7 @@ export type AccountUncheckedCreateWithoutSentInput = {
   balance: number
   createdAt?: Date | string
   received?: Prisma.TransferUncheckedCreateNestedManyWithoutToAccountInput
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutAccountInput
 }
 
 export type AccountCreateOrConnectWithoutSentInput = {
@@ -417,6 +440,7 @@ export type AccountCreateWithoutReceivedInput = {
   balance: number
   createdAt?: Date | string
   sent?: Prisma.TransferCreateNestedManyWithoutFromAccountInput
+  user?: Prisma.UserCreateNestedOneWithoutAccountInput
 }
 
 export type AccountUncheckedCreateWithoutReceivedInput = {
@@ -425,6 +449,7 @@ export type AccountUncheckedCreateWithoutReceivedInput = {
   balance: number
   createdAt?: Date | string
   sent?: Prisma.TransferUncheckedCreateNestedManyWithoutFromAccountInput
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutAccountInput
 }
 
 export type AccountCreateOrConnectWithoutReceivedInput = {
@@ -449,6 +474,7 @@ export type AccountUpdateWithoutSentInput = {
   balance?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   received?: Prisma.TransferUpdateManyWithoutToAccountNestedInput
+  user?: Prisma.UserUpdateOneWithoutAccountNestedInput
 }
 
 export type AccountUncheckedUpdateWithoutSentInput = {
@@ -457,6 +483,7 @@ export type AccountUncheckedUpdateWithoutSentInput = {
   balance?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   received?: Prisma.TransferUncheckedUpdateManyWithoutToAccountNestedInput
+  user?: Prisma.UserUncheckedUpdateOneWithoutAccountNestedInput
 }
 
 export type AccountUpsertWithoutReceivedInput = {
@@ -476,6 +503,7 @@ export type AccountUpdateWithoutReceivedInput = {
   balance?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sent?: Prisma.TransferUpdateManyWithoutFromAccountNestedInput
+  user?: Prisma.UserUpdateOneWithoutAccountNestedInput
 }
 
 export type AccountUncheckedUpdateWithoutReceivedInput = {
@@ -484,6 +512,59 @@ export type AccountUncheckedUpdateWithoutReceivedInput = {
   balance?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sent?: Prisma.TransferUncheckedUpdateManyWithoutFromAccountNestedInput
+  user?: Prisma.UserUncheckedUpdateOneWithoutAccountNestedInput
+}
+
+export type AccountCreateWithoutUserInput = {
+  id?: string
+  owner: string
+  balance: number
+  createdAt?: Date | string
+  sent?: Prisma.TransferCreateNestedManyWithoutFromAccountInput
+  received?: Prisma.TransferCreateNestedManyWithoutToAccountInput
+}
+
+export type AccountUncheckedCreateWithoutUserInput = {
+  id?: string
+  owner: string
+  balance: number
+  createdAt?: Date | string
+  sent?: Prisma.TransferUncheckedCreateNestedManyWithoutFromAccountInput
+  received?: Prisma.TransferUncheckedCreateNestedManyWithoutToAccountInput
+}
+
+export type AccountCreateOrConnectWithoutUserInput = {
+  where: Prisma.AccountWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCreateWithoutUserInput, Prisma.AccountUncheckedCreateWithoutUserInput>
+}
+
+export type AccountUpsertWithoutUserInput = {
+  update: Prisma.XOR<Prisma.AccountUpdateWithoutUserInput, Prisma.AccountUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.AccountCreateWithoutUserInput, Prisma.AccountUncheckedCreateWithoutUserInput>
+  where?: Prisma.AccountWhereInput
+}
+
+export type AccountUpdateToOneWithWhereWithoutUserInput = {
+  where?: Prisma.AccountWhereInput
+  data: Prisma.XOR<Prisma.AccountUpdateWithoutUserInput, Prisma.AccountUncheckedUpdateWithoutUserInput>
+}
+
+export type AccountUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  owner?: Prisma.StringFieldUpdateOperationsInput | string
+  balance?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sent?: Prisma.TransferUpdateManyWithoutFromAccountNestedInput
+  received?: Prisma.TransferUpdateManyWithoutToAccountNestedInput
+}
+
+export type AccountUncheckedUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  owner?: Prisma.StringFieldUpdateOperationsInput | string
+  balance?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sent?: Prisma.TransferUncheckedUpdateManyWithoutFromAccountNestedInput
+  received?: Prisma.TransferUncheckedUpdateManyWithoutToAccountNestedInput
 }
 
 
@@ -533,6 +614,7 @@ export type AccountSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdAt?: boolean
   sent?: boolean | Prisma.Account$sentArgs<ExtArgs>
   received?: boolean | Prisma.Account$receivedArgs<ExtArgs>
+  user?: boolean | Prisma.Account$userArgs<ExtArgs>
   _count?: boolean | Prisma.AccountCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["account"]>
 
@@ -561,6 +643,7 @@ export type AccountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type AccountInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sent?: boolean | Prisma.Account$sentArgs<ExtArgs>
   received?: boolean | Prisma.Account$receivedArgs<ExtArgs>
+  user?: boolean | Prisma.Account$userArgs<ExtArgs>
   _count?: boolean | Prisma.AccountCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type AccountIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -571,6 +654,7 @@ export type $AccountPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     sent: Prisma.$TransferPayload<ExtArgs>[]
     received: Prisma.$TransferPayload<ExtArgs>[]
+    user: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -973,6 +1057,7 @@ export interface Prisma__AccountClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   sent<T extends Prisma.Account$sentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$sentArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   received<T extends Prisma.Account$receivedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$receivedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  user<T extends Prisma.Account$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1444,6 +1529,25 @@ export type Account$receivedArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.TransferScalarFieldEnum | Prisma.TransferScalarFieldEnum[]
+}
+
+/**
+ * Account.user
+ */
+export type Account$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**
