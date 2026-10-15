@@ -1,5 +1,5 @@
 import type { PrismaClient } from "@/generated/prisma/client";
-import type { AccountRepository } from "../account-repository";
+import type { AccountRepository } from "@/repositories/account-repository";
 
 const select = { id: true, owner: true, balance: true } as const;
 

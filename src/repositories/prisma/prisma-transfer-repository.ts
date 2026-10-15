@@ -1,5 +1,8 @@
 import type { PrismaClient } from "@/generated/prisma/client";
-import type { NewTransfer, TransferRepository } from "../transfer-repository";
+import type {
+  NewTransfer,
+  TransferRepository,
+} from "@/repositories/transfer-repository";
 import { Transfer, TransferWithOwners } from "@/domain/types";
 
 export class PrismaTransferRepository implements TransferRepository {

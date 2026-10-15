@@ -1,4 +1,4 @@
-import { InvalidAmountError } from "./errors";
+import { InvalidAmountError } from "@/domain/errors";
 
 const AMOUNT_PATTERN = /^\d{1,9}([.,]\d{1,2})?$/;
 
