@@ -1,11 +1,15 @@
 "use client";
 import { useActionState } from "react";
-import type { Account } from "@/domain/types";
+import type { Account, AccountSummary } from "@/domain/types";
 import { transferAction, type TransferFormState } from "@/app/actions";
 
 const initialState: TransferFormState = { status: "idle", message: "" };
 
-export function TransferForm({ accounts }: { accounts: Account[] }) {
+export function TransferForm({
+  destinations,
+}: {
+  destinations: AccountSummary[];
+}) {
   const [state, formAction, pending] = useActionState(
     transferAction,
     initialState,
@@ -14,21 +18,11 @@ export function TransferForm({ accounts }: { accounts: Account[] }) {
     <form action={formAction} className="card">
       <h2>New Transfer</h2>
       <label>
-        From
-        <select name="fromAccountId" required>
-          {accounts.map((a) => (
-            <option key={a.id} value={a.id}>
-              {a.owner}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label>
         To
         <select name="toAccountId" required>
-          {accounts.map((a) => (
-            <option key={a.id} value={a.id}>
-              {a.owner}
+          {destinations.map((account) => (
+            <option key={account.id} value={account.id}>
+              {account.owner}
             </option>
           ))}
         </select>

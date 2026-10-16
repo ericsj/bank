@@ -3,6 +3,8 @@ import { connection } from "next/server";
 import { accountRepository, transferRepository } from "@/container";
 import { formatCents } from "@/domain/money";
 import { TransferForm } from "./transfer-form";
+import { requireSession } from "@/lib/session";
+import { logoutAction } from "./actions";
 
 export default function HomePage() {
   return (
@@ -18,25 +20,23 @@ export default function HomePage() {
   );
 }
 
-async function AccountsSection() {
-  await connection();
-  const accounts = await accountRepository.findAll();
+async function AccountSection() {
+  const session = await requireSession();
+  const [me, accounts] = await Promise.all([
+    accountRepository.findById(session.accountId),
+    accountRepository.findAll(),
+  ]);
+  if (!me) throw new Error("Account from current session was not found");
+  const destinations = accounts
+    .filter((account) => account.id != me.id)
+    .map(({ id, owner }) => ({ id, owner }));
   return (
     <>
       <section className="card">
-        <h2>Accounts</h2>
-        <table>
-          <tbody>
-            {accounts.map((account) => (
-              <tr key={account.id}>
-                <td>{account.owner}</td>
-                <td className="num">{formatCents(account.balance)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <h2>Hellow, {me.owner}</h2>
+        <form action={logoutAction}><button type="submit">Logout</button></form>
       </section>
-      <TransferForm accounts={accounts} />
+      <TransferForm destinations={destinations} />
     </>
   );
 }

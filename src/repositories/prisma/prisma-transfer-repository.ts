@@ -10,9 +10,15 @@ export class PrismaTransferRepository implements TransferRepository {
   create(data: NewTransfer): Promise<Transfer> {
     return this.db.transfer.create({ data });
   }
-  listRecent(limit: number): Promise<TransferWithOwners[]> {
+  listByAccount(
+    accountId: string,
+    limit: number,
+  ): Promise<TransferWithOwners[]> {
     return this.db.transfer
       .findMany({
+        where: {
+          OR: [{ fromAccountId: accountId }, { toAccountId: accountId }],
+        },
         include: {
           fromAccount: {
             select: {

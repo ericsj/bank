@@ -5,6 +5,8 @@ import { z } from "zod";
 import { transferService } from "@/container";
 import { DomainError } from "@/domain/errors";
 import { parseAmountToCents } from "@/domain/money";
+import { deleteSession, requireSession } from "@/lib/session";
+import { redirect } from "next/navigation";
 
 export type TransferFormState = {
   status: "idle" | "success" | "error";
@@ -21,13 +23,18 @@ export async function transferAction(
   _prev: TransferFormState,
   formData: FormData,
 ): Promise<TransferFormState> {
-  const parsed = transferSchema.safeParse(Object.fromEntries(formData));
+  const session = await requireSession();
+  const fields = {
+    toAccountId: String(formData.get("toAccountId") ?? ""),
+    amount: String(formData.get("amount") ?? ""),
+  };
+  const parsed = transferSchema.safeParse(fields);
   if (!parsed.success) {
     return { status: "error", message: "Fulfill all the fields" };
   }
   try {
     await transferService.transfer({
-      fromAccountId: parsed.data.fromAccountId,
+      fromAccountId: session.accountId,
       toAccountId: parsed.data.toAccountId,
       amount: parseAmountToCents(parsed.data.amount),
     });
@@ -39,4 +46,9 @@ export async function transferAction(
   }
   revalidatePath("/");
   return { status: "success", message: "Transfer completed" };
+}
+
+export async function logoutAction() {
+  await deleteSession();
+  redirect("/login");
 }

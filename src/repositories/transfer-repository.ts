@@ -8,5 +8,8 @@ export type NewTransfer = {
 
 export interface TransferRepository {
   create(data: NewTransfer): Promise<Transfer>;
-  listRecent(limit: number): Promise<TransferWithOwners[]>;
+  listByAccount(
+    accountId: string,
+    limit: number,
+  ): Promise<TransferWithOwners[]>;
 }
