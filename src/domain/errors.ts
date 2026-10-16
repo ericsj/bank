@@ -30,3 +30,9 @@ export class InsufficientFundsError extends DomainError {
     super("Insufficient funds");
   }
 }
+
+export class InvalidCredentialsError extends DomainError {
+  constructor() {
+    super("Invalid email or password");
+  }
+}
