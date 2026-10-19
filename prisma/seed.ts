@@ -8,8 +8,8 @@ const users = [
 ];
 async function main() {
   await prisma.transfer.deleteMany();
-  await prisma.account.deleteMany();
   await prisma.user.deleteMany();
+  await prisma.account.deleteMany();
   const passwordHash = await bcrypt.hash("pass123", 10);
   for (const user of users) {
     await prisma.account.create({

@@ -5,8 +5,7 @@ import {
   InsufficientFundsError,
 } from "@/domain/errors";
 import { Transfer } from "@/domain/types";
-import { AccountRepository } from "@/repositories/account-repository";
-import { TransferRepository } from "@/repositories/transfer-repository";
+import { UnitOfWork } from "@/repositories/unit-of-work";
 
 type TransferInput = {
   fromAccountId: string;
@@ -14,44 +13,29 @@ type TransferInput = {
   amount: number;
 };
 export class TransferService {
-  constructor(
-    private readonly accountRepository: AccountRepository,
-    private readonly transferRepository: TransferRepository,
-  ) {}
-  async transfer({
-    fromAccountId,
-    toAccountId,
-    amount,
-  }: TransferInput): Promise<Transfer> {
+  constructor(private readonly uow: UnitOfWork) {}
+  async transfer(transferInput: TransferInput): Promise<Transfer> {
+    const { fromAccountId, toAccountId, amount } = transferInput;
     if (amount <= 0) {
       throw new InvalidAmountError();
     }
     if (fromAccountId === toAccountId) {
       throw new SameAccountError();
     }
-    const fromAccount = await this.accountRepository.findById(fromAccountId);
-    if (!fromAccount) {
-      throw new AccountNotFoundError(fromAccountId);
-    }
-    const toAccount = await this.accountRepository.findById(toAccountId);
-    if (!toAccount) {
-      throw new AccountNotFoundError(toAccountId);
-    }
-    if (fromAccount.balance < amount) {
-      throw new InsufficientFundsError();
-    }
-    await this.accountRepository.updateBalance(
-      fromAccountId,
-      fromAccount.balance - amount,
-    );
-    await this.accountRepository.updateBalance(
-      toAccountId,
-      toAccount.balance + amount,
-    );
-    return this.transferRepository.create({
-      amount,
-      fromAccountId,
-      toAccountId,
+    return this.uow.run(async ({ accounts, transfers }) => {
+      const locked = await accounts.lockForUpdate([fromAccountId, toAccountId]);
+      const from = locked.find((account) => account.id === fromAccountId);
+      const to = locked.find((account) => account.id === toAccountId);
+      if (!from) throw new AccountNotFoundError(fromAccountId);
+      if (!to) throw new AccountNotFoundError(toAccountId);
+      if (from.balance < amount) throw new InsufficientFundsError();
+      await accounts.updateBalance(fromAccountId, from.balance - amount);
+      await accounts.updateBalance(toAccountId, to.balance + amount);
+      return transfers.create({
+        fromAccountId,
+        toAccountId,
+        amount,
+      });
     });
   }
 }

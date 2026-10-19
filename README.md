@@ -30,9 +30,10 @@ src/
 
 Authentication uses a signed JWT (HS256) stored in an `httpOnly`, `sameSite=lax` cookie that is `secure` in production. Every Server Action checks the session itself, and the source account always comes from the session, never from the form.
 
-**Database design**
-<img width="1956" height="1665" alt="banco-next-er-diagram" src="https://github.com/user-attachments/assets/0cba3d34-eff1-4fe0-9b09-b9415bdd8c23" />
+**Concurrency Handling:**The app handles concurrent transfers with pessimistic row-level locking: inside a database transaction, the involved accounts are locked with SELECT ... FOR UPDATE, ordered by id to prevent deadlocks. The Unit of Work pattern guarantees that all repository operations of a transfer run atomically in a single transaction, and, together with repository interfaces, keeps the service layer independent of Prisma.
 
+**Database Design**
+<img width="1956" height="1665" alt="banco-next-er-diagram" src="https://github.com/user-attachments/assets/0cba3d34-eff1-4fe0-9b09-b9415bdd8c23" />
 
 **Prerequisites:** Node.js 20.9+ and Docker.
 
@@ -67,11 +68,6 @@ Authentication uses a signed JWT (HS256) stored in an `httpOnly`, `sameSite=lax`
 
 ## WIPs
 
-- [ ] **Handle concurrency.** A transfer reads the balance, checks it and then writes the new value. Two concurrent transfers from the same account can both pass the check and overdraw it (a lost update). The plan:
-  - Lock both accounts with `SELECT ... FOR UPDATE` inside the transaction before reading the balances.
-  - Always lock the accounts in the same order (by id) to avoid deadlocks.
-  - Add database `CHECK` constraints (`balance >= 0`, `amount > 0`) as a last line of defense.
-  - Add a script that fires many simultaneous transfers to show the problem before and after the fix.
 - [ ] **Create unit tests** with Vitest:
   - Money parsing and formatting (`parseAmountToCents`, `formatCents`).
   - `TransferService` and `AuthService`, using in-memory repository fakes instead of the database.

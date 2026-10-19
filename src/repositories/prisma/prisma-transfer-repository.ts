@@ -1,4 +1,4 @@
-import type { PrismaClient } from "@/generated/prisma/client";
+import type { Prisma } from "@/generated/prisma/client";
 import type {
   NewTransfer,
   TransferRepository,
@@ -6,7 +6,7 @@ import type {
 import { Transfer, TransferWithOwners } from "@/domain/types";
 
 export class PrismaTransferRepository implements TransferRepository {
-  constructor(private readonly db: PrismaClient) {}
+  constructor(private readonly db: Prisma.TransactionClient) {}
   create(data: NewTransfer): Promise<Transfer> {
     return this.db.transfer.create({ data });
   }
