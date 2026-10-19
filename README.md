@@ -76,3 +76,4 @@ Authentication uses a signed JWT (HS256) stored in an `httpOnly`, `sameSite=lax`
   - `TransferService` and `AuthService`, using in-memory repository fakes instead of the database.
   - JWT signing and verification, including expired and tampered tokens.
   - Server Actions: input validation and error handling.
+- [ ] **Create integration tests**
