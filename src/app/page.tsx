@@ -11,7 +11,7 @@ export default function HomePage() {
     <main>
       <h1>Banking app</h1>
       <Suspense fallback={<p className="card">Loading accounts...</p>}>
-        <AccountsSection />
+        <AccountSection />
       </Suspense>
       <Suspense fallback={<p className="card">Loading transfers history...</p>}>
         <RecentTransfers />
@@ -34,17 +34,25 @@ async function AccountSection() {
     <>
       <section className="card">
         <h2>Hellow, {me.owner}</h2>
-        <form action={logoutAction}><button type="submit">Logout</button></form>
+        <form action={logoutAction}>
+          <button type="submit">Logout</button>
+        </form>
       </section>
+      <p>
+        Balance: <strong>{formatCents(me.balance)}</strong>
+      </p>
       <TransferForm destinations={destinations} />
     </>
   );
 }
 
 async function RecentTransfers() {
-  await connection();
-  const transfersLimit = 50;
-  const transfers = await transferRepository.listRecent(transfersLimit);
+  const session = await requireSession();
+  const transfersEntriesLimit = 50;
+  const transfers = await transferRepository.listByAccount(
+    session.accountId,
+    transfersEntriesLimit,
+  );
   return (
     <>
       <section className="card">

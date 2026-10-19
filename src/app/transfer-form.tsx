@@ -1,6 +1,6 @@
 "use client";
 import { useActionState } from "react";
-import type { Account, AccountSummary } from "@/domain/types";
+import type { AccountSummary } from "@/domain/types";
 import { transferAction, type TransferFormState } from "@/app/actions";
 
 const initialState: TransferFormState = { status: "idle", message: "" };
