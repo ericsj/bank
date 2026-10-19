@@ -1,4 +1,4 @@
-# Banco Next
+# Next.js bank app
 
 A minimal bank-style money transfer app built with **Next.js 16**, **TypeScript** and **Server Actions**. Users log in with a pre-created account, see their balance and recent transfers, and send money to other accounts. It is a learning and portfolio project, not meant for production use.
 
@@ -29,6 +29,10 @@ src/
 ```
 
 Authentication uses a signed JWT (HS256) stored in an `httpOnly`, `sameSite=lax` cookie that is `secure` in production. Every Server Action checks the session itself, and the source account always comes from the session, never from the form.
+
+**Database design**
+<img width="1956" height="1665" alt="banco-next-er-diagram" src="https://github.com/user-attachments/assets/0cba3d34-eff1-4fe0-9b09-b9415bdd8c23" />
+
 
 **Prerequisites:** Node.js 20.9+ and Docker.
 
