@@ -77,3 +77,4 @@ Authentication uses a signed JWT (HS256) stored in an `httpOnly`, `sameSite=lax`
   - JWT signing and verification, including expired and tampered tokens.
   - Server Actions: input validation and error handling.
 - [ ] **Create integration tests**
+- [ ] **Add mechanism to avoid accidental form resubmission**
