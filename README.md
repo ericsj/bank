@@ -1,4 +1,5 @@
 # Next.js bank app
+<img width="679" height="596" alt="bank app" src="https://github.com/user-attachments/assets/b32c0635-7f54-4262-a2b9-417516f930bb" />
 
 A minimal bank-style money transfer app built with **Next.js 16**, **TypeScript** and **Server Actions**. Users log in with a pre-created account, see their balance and recent transfers, and send money to other accounts. It is a learning and portfolio project, not meant for production use.
 
