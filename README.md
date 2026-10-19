@@ -65,7 +65,7 @@ Authentication uses a signed JWT (HS256) stored in an `httpOnly`, `sameSite=lax`
    npm run dev
    ```
 
-## TODOs
+## WIPs
 
 - [ ] **Handle concurrency.** A transfer reads the balance, checks it and then writes the new value. Two concurrent transfers from the same account can both pass the check and overdraw it (a lost update). The plan:
   - Lock both accounts with `SELECT ... FOR UPDATE` inside the transaction before reading the balances.
