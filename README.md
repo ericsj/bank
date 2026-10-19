@@ -30,10 +30,12 @@ src/
 
 Authentication uses a signed JWT (HS256) stored in an `httpOnly`, `sameSite=lax` cookie that is `secure` in production. Every Server Action checks the session itself, and the source account always comes from the session, never from the form.
 
-**Concurrency Handling:**The app handles concurrent transfers with pessimistic row-level locking: inside a database transaction, the involved accounts are locked with SELECT ... FOR UPDATE, ordered by id to prevent deadlocks. The Unit of Work pattern guarantees that all repository operations of a transfer run atomically in a single transaction, and, together with repository interfaces, keeps the service layer independent of Prisma.
+**Concurrency Handling:** The app handles concurrent transfers with pessimistic row-level locking: inside a database transaction, the involved accounts are locked with SELECT ... FOR UPDATE, ordered by id to prevent deadlocks. The Unit of Work pattern guarantees that all repository operations of a transfer run atomically in a single transaction, and, together with repository interfaces, keeps the service layer independent of Prisma.
 
 **Database Design**
 <img width="1956" height="1665" alt="banco-next-er-diagram" src="https://github.com/user-attachments/assets/0cba3d34-eff1-4fe0-9b09-b9415bdd8c23" />
+
+## Local Setup
 
 **Prerequisites:** Node.js 20.9+ and Docker.
 
