@@ -3,7 +3,7 @@
 
 A minimal bank-style money transfer app built with **Next.js 16**, **TypeScript** and **Server Actions**. Users log in with a pre-created account, see their balance and recent transfers, and send money to other accounts. It is a learning and portfolio project, not meant for production use.
 
-**Live demo:** https://bank-iuzfeu847-eric-e532.vercel.app/
+**Live demo:** [https://bank-iuzfeu847-eric-e532.vercel.app](https://bank-beta-liart.vercel.app/)
 
 | Email            | Password  |
 | ---------------- | --------- |
